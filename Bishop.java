@@ -1,4 +1,4 @@
-public class Bishop
+public class Bishop extends Piece
 {
 	public King(String position, char color)
 	{
