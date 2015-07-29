@@ -1,4 +1,4 @@
-import java.util.*;
+mport java.util.*;
 
 public class ChessBoard{
   
@@ -10,33 +10,42 @@ public class ChessBoard{
   private static final int PREFERENCE_MOVE = 2;
   private static final int CASTLING = 3;
   
-  Chessboard() {
-    whitePieces[0] = new King("", 'W');
-    whitePieces[1] = new Queen("", 'W');
-    whitePieces[2] = new Rook("", 'W');
-    whitePieces[3] = new Rook("", 'W');
-    whitePieces[4] = new Bishop("", 'W');
-    whitePieces[5] = new Bishop("", 'W');
-    whitePieces[6] = new Knight("", 'W');
-    whitePieces[7] = new Knight("", 'W');
+  public ChessBoard() {
+    whitePieces[0] = new Piece("Ra1");
+    whitePieces[1] = new Piece("Nb1");
+    whitePieces[2] = new Piece("Bc1");
+    whitePieces[3] = new Piece("Qd1");
+    whitePieces[4] = new Piece("Ke1");
+    whitePieces[5] = new Piece("Bf1");
+    whitePieces[6] = new Piece("Ng1");
+    whitePieces[7] = new Piece("Rh1");
+	whitePieces[8] = new Piece("a2");
+	whitePieces[9] = new Piece("b2");
+	whitePieces[10] = new Piece("c2");
+	whitePieces[11] = new Piece("d2");
+	whitePieces[12] = new Piece("e2");
+	whitePieces[13] = new Piece("f2");
+	whitePieces[14] = new Piece("g2");
+	whitePieces[15] = new Piece("h2");
+   
 	
-    for(int i=8; i<16; i++) {
-      whitePieces[i] = newPawn("", 'W');
-    }
-	
-    blackPieces[0] = new King("", 'B');
-    blackPieces[1] = new Queen("", 'B');
-    blackPieces[2] = new Rook("", 'B');
-    blackPieces[3] = new Rook("", 'B');
-    blackPieces[4] = new Bishop("", 'B');
-    blackPieces[5] = new Bishop("", 'B');
-    blackPieces[6] = new Knight("", 'B');
-    blackPieces[7] = new Knight("", 'B');
-    
-	for(int i=8; i<16; i++) {
-      blackPieces[i] = newPawn("", 'B');
-    }
-	
+    blackPieces[0] = new Piece("Ra8");
+    blackPieces[1] = new Piece("Nb8");
+    blackPieces[2] = new Piece("Bc8");
+    blackPieces[3] = new Piece("Kd8");
+    blackPieces[4] = new Piece("Qe8");
+    blackPieces[5] = new Piece("Bf8");
+    blackPieces[6] = new Piece("Ng8");
+    blackPieces[7] = new Piece("Rh8");
+    blackPieces[8] = new Piece("a7");
+    blackPieces[9] = new Piece("b7");
+    blackPieces[10] = new Piece("c7");
+    blackPieces[11] = new Piece("d7");
+    blackPieces[12] = new Piece("e7");
+    blackPieces[13] = new Piece("f7");
+    blackPieces[14] = new Piece("g7");
+    blackPieces[15] = new Piece("h7");
+   
   }
   
   public void chessMove(String pieceType, String move, char color)
@@ -46,14 +55,14 @@ public class ChessBoard{
 	 {
 		for (int piece = 0; piece < 16; piece++)
 		{
-			if (blackPieces[piece].getType() == pieceType && !blackPieces[piece].isKilled())
+			if (blackPieces[piece].getType().equals(pieceType) && !blackPieces[piece].isKilled())
 			{
 				switch (classifyMove(move))
 				{
 					case MOVE : 			blackPieces[piece].setPosition(move); 
 											return;
 					case KILLING_MOVE :
-											if (moves.charAt(0) == 'x')
+											if (move.charAt(0) == 'x')
 												move = move.substring(1);
 											else
 												move = move.substring(2);
@@ -103,7 +112,7 @@ public class ChessBoard{
 					case MOVE : 			whitePieces[piece].setPosition(move); 
 											return;
 					case KILLING_MOVE :
-											if (moves.charAt(0) == 'x')
+											if (move.charAt(0) == 'x')
 												move = move.substring(1);
 											else
 												move = move.substring(2);
@@ -159,7 +168,7 @@ public class ChessBoard{
 		return KILLING_MOVE;
 	}
 	
-	if (moves.charAt(0) >= 'a' && moves.charAt(0) =< 'h')
+	if (moves.charAt(0) >= 'a' && moves.charAt(0) <= 'h')
 	{
 		return  PREFERENCE_MOVE;
 	}
@@ -168,5 +177,14 @@ public class ChessBoard{
 	{
 		return CASTLING;
 	}
+	return -1;
   }
+  
+  public static void main(String[] arg)
+  {
+	ChessBoard chess = new ChessBoard();
+	chess.makeMove('K','e4','B');
+  
+  }
+  
 }
