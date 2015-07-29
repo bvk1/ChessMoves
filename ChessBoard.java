@@ -19,9 +19,11 @@ public class ChessBoard{
     whitePieces[5] = new Bishop("", 'W');
     whitePieces[6] = new Knight("", 'W');
     whitePieces[7] = new Knight("", 'W');
+	
     for(int i=8; i<16; i++) {
       whitePieces[i] = newPawn("", 'W');
     }
+	
     blackPieces[0] = new King("", 'B');
     blackPieces[1] = new Queen("", 'B');
     blackPieces[2] = new Rook("", 'B');
@@ -30,9 +32,11 @@ public class ChessBoard{
     blackPieces[5] = new Bishop("", 'B');
     blackPieces[6] = new Knight("", 'B');
     blackPieces[7] = new Knight("", 'B');
-    for(int i=8; i<16; i++) {
+    
+	for(int i=8; i<16; i++) {
       blackPieces[i] = newPawn("", 'B');
     }
+	
   }
   
   public void chessMove(String pieceType, String move, char color)
@@ -54,9 +58,9 @@ public class ChessBoard{
 										
 											for (int whitePiece = 16; whitePiece < 32; whitePiece++)
 											{
-												if (whitePieces[piece].getPosition().equals(move))
+												if (whitePieces[whitePiece].getPosition().equals(move))
 												{
-													whitePieces[piece].kill(true);
+													whitePieces[whitePiece].kill(true);
 												}
 											}
 											return;
@@ -78,33 +82,33 @@ public class ChessBoard{
 		}
 	 }else
 	 {
-		for (int piece = 0; piece < 16; piece++)
+		for (int piece = 16; piece < 32; piece++)
 		{
-			if (blackPieces[piece].getType() == pieceType && !blackPieces[piece].isKilled())
+			if (whitePieces[piece].getType() == pieceType && !whitePieces[piece].isKilled())
 			{
 				switch (classifyMove(move))
 				{
-					case MOVE : 			blackPieces[piece].setPosition(move); 
+					case MOVE : 			whitePieces[piece].setPosition(move); 
 											return;
 					case KILLING_MOVE :
 											move = move.substring(1);
-											blackPieces[piece].setPosition(move);
+											whitePieces[piece].setPosition(move);
 										
-											for (int whitePiece = 16; whitePiece < 32; whitePiece++)
+											for (int blackPiece = 0; blackPiece < 16; blackPiece++)
 											{
-												if (whitePieces[piece].getPosition().equals(move))
+												if (blackPieces[blackPiece].getPosition().equals(move))
 												{
-													whitePieces[piece].kill(true);
+													blackPieces[blackPiece].kill(true);
 												}
 											}
 											return;
 					case PREFERENCE_MOVE :
 										
 											pos = move.charAt(0);
-											if (blackPieces[piece].getPosition().charAt(0) == pos)
+											if (whitePieces[piece].getPosition().charAt(0) == pos)
 											{
 												move = move.substring(1);
-												blackPieces[piece].setPosition(move);
+												whitePieces[piece].setPosition(move);
 											}else
 											{
 												continue;
