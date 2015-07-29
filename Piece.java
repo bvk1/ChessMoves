@@ -3,6 +3,7 @@ import java.util.*;
 public class Piece{
   
   protected String position;
+  protected char type;
   protected boolean isKilled;
   protected char colourOfPiece;
   
