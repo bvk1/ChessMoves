@@ -4,9 +4,4 @@ public class Queen extends Piece
 	{
 		super(position, color , 'Q');
 	}
-	
-	public boolean canMoveTo(String position)
-	{
-		
-	}
 }
