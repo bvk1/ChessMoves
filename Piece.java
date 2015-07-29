@@ -15,11 +15,20 @@ public class Piece{
   }
 
   protected void setPosition(String position){
-  
   }
   
   protected boolean canMoveTo(String position){
   
+  }
+
+  protected boolean isKilled()
+  {
+	return isKilled;
+  }
+  
+  protected boolean kill(boolean isKilled)
+  {
+	this.isKilled = isKilled;
   }
   
   protected boolean getType()

@@ -1,8 +1,15 @@
 import java.util.*;
 
 public class ChessBoard{
+  
   private Piece[] whitePieces = new Piece[16];
   private Piece[] blackPieces = new Piece[16];
+  
+  private static final int MOVE = 0;
+  private static final int KILLING_MOVE = 1;
+  private static final int PREFERENCE_MOVE = 2;
+  private static final int CASTLING = 3;
+  
   Chessboard() {
     whitePieces[0] = new King("", 'W');
     whitePieces[1] = new Queen("", 'W');
@@ -28,8 +35,106 @@ public class ChessBoard{
     }
   }
   
-  public void move(String move, String 
+  public void chessMove(String pieceType, String move, char color)
+  {
+	 char pos = '';
+	 if (color == 'B')
+	 {
+		for (int piece = 0; piece < 16; piece++)
+		{
+			if (blackPieces[piece].getType() == pieceType && !blackPieces[piece].isKilled())
+			{
+				switch (classifyMove(move))
+				{
+					case MOVE : 			blackPieces[piece].setPosition(move); 
+											return;
+					case KILLING_MOVE :
+											move = move.substring(1);
+											blackPieces[piece].setPosition(move);
+										
+											for (int whitePiece = 16; whitePiece < 32; whitePiece++)
+											{
+												if (whitePieces[piece].getPosition().equals(move))
+												{
+													whitePieces[piece].kill(true);
+												}
+											}
+											return;
+					case PREFERENCE_MOVE :
+										
+											pos = move.charAt(0);
+											if (blackPieces[piece].getPosition().charAt(0) == pos)
+											{
+												move = move.substring(1);
+												blackPieces[piece].setPosition(move);
+											}else
+											{
+												continue;
+											}
+											return;
+					case CASTLING : 		return;
+				}
+			}
+		}
+	 }else
+	 {
+		for (int piece = 0; piece < 16; piece++)
+		{
+			if (blackPieces[piece].getType() == pieceType && !blackPieces[piece].isKilled())
+			{
+				switch (classifyMove(move))
+				{
+					case MOVE : 			blackPieces[piece].setPosition(move); 
+											return;
+					case KILLING_MOVE :
+											move = move.substring(1);
+											blackPieces[piece].setPosition(move);
+										
+											for (int whitePiece = 16; whitePiece < 32; whitePiece++)
+											{
+												if (whitePieces[piece].getPosition().equals(move))
+												{
+													whitePieces[piece].kill(true);
+												}
+											}
+											return;
+					case PREFERENCE_MOVE :
+										
+											pos = move.charAt(0);
+											if (blackPieces[piece].getPosition().charAt(0) == pos)
+											{
+												move = move.substring(1);
+												blackPieces[piece].setPosition(move);
+											}else
+											{
+												continue;
+											}
+											return;
+					case CASTLING : 		return;
+				}
+			}
+		}	
+	 }
+  }  
   
+  private int classifyMove(String moves)
+  {
   
-  
+	if (moves.length() == 2)
+	{
+		return MOVE;
+	}
+	if (moves.charAt(0) == 'x')
+	{
+		return KILLING_MOVE;
+	}
+	if (moves.charAt(0) >= 'a' && moves.charAt(0) =< 'h')
+	{
+		return  PREFERENCE_MOVE;
+	}
+	if (moves.charAt(0) == 'o')
+	{
+		return CASTLING;
+	}
+  }
 }
