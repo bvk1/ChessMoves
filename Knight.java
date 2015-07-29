@@ -1,6 +1,6 @@
 public class Knight extends Piece
 {	
-	public King(String position, char color)
+	public Knight(String position, char color)
 	{
 		super(position, color);
 	}

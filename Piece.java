@@ -14,5 +14,8 @@ public class Piece{
   }
   protected void moveTo(String position){}
   protected boolean canMoveTo(String position){}
-  protected String getPosition(Piece obj){}
+  
+  protected String getPosition(){
+	  return position;
+  }
   }

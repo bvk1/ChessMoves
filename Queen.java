@@ -1,6 +1,6 @@
-public class Bishop
+public class Queen
 {
-	public King(String position, char color)
+	public Queen(String position, char color)
 	{
 		super(position, color);
 	}
