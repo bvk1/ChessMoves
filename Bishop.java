@@ -4,9 +4,4 @@ public class Bishop extends Piece
 	{
 		super(position, color, 'B');
 	}
-	
-	public boolean canMoveTo(String position)
-	{
-		
-	}
 }
