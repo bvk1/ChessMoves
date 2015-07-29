@@ -2,10 +2,10 @@ public class Knight extends Piece
 {	
 	public Knight(String position, char color)
 	{
-		super(position, color);
+		super(position, color, 'N');
 	}
 	
-	public void moveTo(String position)
+	public boolen canMoveTo(String position)
 	{
 		
 	}

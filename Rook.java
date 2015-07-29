@@ -1,11 +1,11 @@
 public class Rook extends Piece
 {	
-	public King(String position, char color)
+	public Rook(String position, char color)
 	{
-		super(position, color);
+		super(position, color, 'R');
 	}
 	
-	public void moveTo(String position)
+	public boolean canMoveTo(String position)
 	{
 		
 	}

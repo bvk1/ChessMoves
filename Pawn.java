@@ -3,10 +3,10 @@ public class Pawn extends Piece
 {	
 	public Pawn(String position, char color)
 	{
-		super(position, color);
+		super(position, color , 'P');
 	}
 	
-	public void moveTo(String position)
+	public boolean canMoveTo(String position)
 	{
 		
 	}

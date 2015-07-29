@@ -2,10 +2,10 @@ public class Bishop extends Piece
 {
 	public Bishop(String position, char color)
 	{
-		super(position, color);
+		super(position, color, 'B');
 	}
 	
-	public void moveTo(String position)
+	public boolean canMoveTo(String position)
 	{
 		
 	}

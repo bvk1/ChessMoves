@@ -2,10 +2,10 @@ public class Queen extends Piece
 {
 	public Queen(String position, char color)
 	{
-		super(position, color);
+		super(position, color , 'Q');
 	}
 	
-	public void moveTo(String position)
+	public boolean canMoveTo(String position)
 	{
 		
 	}

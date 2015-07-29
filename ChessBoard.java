@@ -27,4 +27,9 @@ public class ChessBoard{
       blackPieces[i] = newPawn("", 'B');
     }
   }
+  
+  public void move(String move, String 
+  
+  
+  
 }
