@@ -41,7 +41,7 @@ public class ChessBoard{
   
   public void chessMove(String pieceType, String move, char color)
   {
-	 char pos = '';
+	 String pos = "";
 	 if (color == 'B')
 	 {
 		for (int piece = 0; piece < 16; piece++)
@@ -53,10 +53,14 @@ public class ChessBoard{
 					case MOVE : 			blackPieces[piece].setPosition(move); 
 											return;
 					case KILLING_MOVE :
-											move = move.substring(1);
+											if (moves.charAt(0) == 'x')
+												move = move.substring(1);
+											else
+												move = move.substring(2);
+												
 											blackPieces[piece].setPosition(move);
 										
-											for (int whitePiece = 16; whitePiece < 32; whitePiece++)
+											for (int whitePiece = 0; whitePiece < 16; whitePiece++)
 											{
 												if (whitePieces[whitePiece].getPosition().equals(move))
 												{
@@ -66,10 +70,18 @@ public class ChessBoard{
 											return;
 					case PREFERENCE_MOVE :
 										
-											pos = move.charAt(0);
-											if (blackPieces[piece].getPosition().charAt(0) == pos)
+											if (move.length() == 3)
 											{
+												pos += move.charAt(0);
 												move = move.substring(1);
+											}else if (move.length() == 4)
+											{
+												pos += move.substring(0,2);
+												move = move.substring(2);
+											}
+											
+											if (blackPieces[piece].getPosition().equals(pos))
+											{
 												blackPieces[piece].setPosition(move);
 											}else
 											{
@@ -82,7 +94,7 @@ public class ChessBoard{
 		}
 	 }else
 	 {
-		for (int piece = 16; piece < 32; piece++)
+		for (int piece = 0; piece < 16; piece++)
 		{
 			if (whitePieces[piece].getType() == pieceType && !whitePieces[piece].isKilled())
 			{
@@ -91,7 +103,11 @@ public class ChessBoard{
 					case MOVE : 			whitePieces[piece].setPosition(move); 
 											return;
 					case KILLING_MOVE :
-											move = move.substring(1);
+											if (moves.charAt(0) == 'x')
+												move = move.substring(1);
+											else
+												move = move.substring(2);
+											
 											whitePieces[piece].setPosition(move);
 										
 											for (int blackPiece = 0; blackPiece < 16; blackPiece++)
@@ -104,16 +120,25 @@ public class ChessBoard{
 											return;
 					case PREFERENCE_MOVE :
 										
-											pos = move.charAt(0);
-											if (whitePieces[piece].getPosition().charAt(0) == pos)
+											if (move.length() == 3)
 											{
+												pos += move.charAt(0);
 												move = move.substring(1);
+											}else if (move.length() == 4)
+											{
+												pos += move.substring(0,2);
+												move = move.substring(2);
+											}
+											
+											if (whitePieces[piece].getPosition().equals(pos))
+											{
 												whitePieces[piece].setPosition(move);
 											}else
 											{
 												continue;
 											}
 											return;
+											
 					case CASTLING : 		return;
 				}
 			}
@@ -128,14 +153,17 @@ public class ChessBoard{
 	{
 		return MOVE;
 	}
-	if (moves.charAt(0) == 'x')
+	
+	if (moves.charAt(0) == 'x' || moves.charAt(1) == 'x')
 	{
 		return KILLING_MOVE;
 	}
+	
 	if (moves.charAt(0) >= 'a' && moves.charAt(0) =< 'h')
 	{
 		return  PREFERENCE_MOVE;
 	}
+	
 	if (moves.charAt(0) == 'o')
 	{
 		return CASTLING;
