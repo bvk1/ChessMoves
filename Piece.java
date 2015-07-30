@@ -45,21 +45,19 @@ public class Piece{
 		}
 		if (this.typeOfPiece.equals("R"))
 		{
-			
-		
+			String fromPosition = getPosition();
+			return fromPosition.charAt(1) == nosition.charAt(1) || fromPosition.charAt(0) == nposition.charAt(0);
 		}
 		
 		if (this.typeOfPiece.equals("N"))
 		{
-		
-		
-		
-		
+			String fromPosition = getPosition();
+			return Math.abs(fromPosition.charAt(0) - nposition.charAt(0)) * Math.abs(fromPosition.charAt(1) - nposition.charAt(1)) == 2;
 		}
 		if (this.typeOfPiece.equals("B"))
 		{
-		
-	
+			String fromPosition = getPosition();
+			return nposition.charAt(0) - fromPosition.charAt(0) == nposition.charAt(1) - fromPosition.charAt(1);
 		}
 	}
 
