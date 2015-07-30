@@ -43,37 +43,32 @@ public class ChessBoard{
     blackPieces[11] = new Piece("d7");
     blackPieces[12] = new Piece("e7");
     blackPieces[13] = new Piece("f7");
-    blackPieces[14] = new Piece("g7");
+    blackPieces[14] = new Piece("g7");	
     blackPieces[15] = new Piece("h7");
    
   }
   
-  public void chessMove(String pieceType, String move, char color)
+  private void blackPieceMove(String pieceType, String move)
   {
-	 String pos = "";
-	 String tmpMov = "";
-	 
-	 if (color == 'B')
-	 {
-		for (int piece = 0; piece < 16; piece++)
+  
+	String pos = "";
+	String tmpMov = "";
+	
+	for (int piece = 0; piece < 16; piece++)
+	{
+		if (blackPieces[piece].getType().equals(pieceType) && !blackPieces[piece].isKilled())
 		{
-			if (blackPieces[piece].getType().equals(pieceType) && !blackPieces[piece].isKilled())
+			switch (classifyMove(move))
 			{
-				switch (classifyMove(move))
-				{
-					case MOVE : 			
-											System.out.println("BLACK OLD POSITION :" + blackPieces[piece].getPosition()); 
-											if (blackPieces[piece].setPosition(move)) 
-											{
-												System.out.println("MOVE");
-												System.out.println("BLACK NEW POSITION :" + blackPieces[piece].getPosition());												
-												return ;	
+				case MOVE : 				if (blackPieces[piece].setPosition(move)) 
+											{											
+												return;	
 											}else
 											{
 												continue;
 											}
 									
-					case KILLING_MOVE :
+				case KILLING_MOVE :
 											pos = "";
 											tmpMov = "";
 											if (move.charAt(0) == 'x')
@@ -88,8 +83,6 @@ public class ChessBoard{
 											//for exD4 type
 											if (!pos.equals("") && blackPieces[piece].getPosition().charAt(0) == pos.charAt(0))
 											{
-											
-												System.out.println("OLD POSITION :" + blackPieces[piece].getPosition());
 												if (blackPieces[piece].setPosition(tmpMov))
 												{
 													for (int whitePiece = 0; whitePiece < 16; whitePiece++)
@@ -99,14 +92,11 @@ public class ChessBoard{
 															whitePieces[whitePiece].kill(true);
 														}
 													}
-													System.out.println("KILLING_MOVE_XD");
-													System.out.println("NEW POSITION :" + blackPieces[piece].getPosition());
 													return;
 												}
 											}
 					
 											// for xD4 type
-											System.out.println("OLD POSITION :" + blackPieces[piece].getPosition());
 											if (blackPieces[piece].setPosition(tmpMov))
 											{
 												for (int whitePiece = 0; whitePiece < 16; whitePiece++)
@@ -116,8 +106,6 @@ public class ChessBoard{
 														blackPieces[whitePiece].kill(true);
 													}
 												}
-												System.out.println("KILLING_MOVE");
-												System.out.println("NEW POSITION :" + whitePieces[piece].getPosition());
 												return;
 											}
 											else
@@ -125,46 +113,53 @@ public class ChessBoard{
 												continue;
 											}
 											
-											
-					case PREFERENCE_MOVE :
-										
+				case PREFERENCE_MOVE :		pos = "";
+											tmpMov  = "";
+				
 											if (move.length() == 3)
 											{
 												pos += move.charAt(0);
-												move = move.substring(1);
+												tmpMov = move.substring(1);
 											}else if (move.length() == 4)
 											{
 												pos += move.substring(0,2);
-												move = move.substring(2);
+												tmpMov = move.substring(2);
 											}
 											
 											if (blackPieces[piece].getPosition().equals(pos))
 											{
-												blackPieces[piece].setPosition(move);
+												System.out.println(" THE OLD POSITION : " + blackPieces[piece].getPosition());
+												blackPieces[piece].setPosition(tmpMov);
+												System.out.println(" THE NEW POSITION : " + blackPieces[piece].getPosition());
+												return;
+											
 											}else
 											{
 												continue;
 											}
-											System.out.println("PREFERENCE_MOVE");
+
+				case CASTLING : 			System.out.println("CASTLING");
 											return;
-					case CASTLING : 		System.out.println("CASTLING");
-											return;
-				}
 			}
 		}
-	 }else
-	 {
-		for (int piece = 0; piece < 16; piece++)
+	}
+  }
+  
+  
+  private void whitePieceMove(String pieceType, String move)
+  {
+	String pos = "";
+	String tmpMov = "";
+  
+	for (int piece = 0; piece < 16; piece++)
 		{
 			if (whitePieces[piece].getType() == pieceType && !whitePieces[piece].isKilled())
 			{
 				switch (classifyMove(move))
 				{
-					case MOVE : 			System.out.println("WHITE OLD POSITION :" + whitePieces[piece].getPosition());
+					case MOVE : 			
 											if (whitePieces[piece].setPosition(move)) 
-											{
-												System.out.println("MOVE");
-												System.out.println("WHITE NEW POSITION :" + whitePieces[piece].getPosition());												
+											{										
 												return ;	
 											}else
 											{
@@ -222,21 +217,24 @@ public class ChessBoard{
 											}
 											
 											
-					case PREFERENCE_MOVE :
+					case PREFERENCE_MOVE :	pos = "";
+											tmpMov = "";	
 										
 											if (move.length() == 3)
 											{
 												pos += move.charAt(0);
-												move = move.substring(1);
+												tmpMov = move.substring(1);
 											}else if (move.length() == 4)
 											{
 												pos += move.substring(0,2);
-												move = move.substring(2);
+												tmpMov = move.substring(2);
 											}
 											
 											if (whitePieces[piece].getPosition().equals(pos))
 											{
+												System.out.println(" THE OLD POSITION : " + whitePieces[piece].getPosition());
 												whitePieces[piece].setPosition(move);
+												System.out.println(" THE NEW POSITION : " + whitePieces[piece].getPosition());
 											}else
 											{
 												continue;
@@ -247,46 +245,56 @@ public class ChessBoard{
 					case CASTLING : 		return;
 				}
 			}
-		}	
-	 }
-  }  
-  
-  private int classifyMove(String moves)
-  {
-  
-	if (moves.length() == 2)
-	{
-		return MOVE;
+		}		
 	}
-	
-	if (moves.charAt(0) == 'x' || moves.charAt(1) == 'x')
-	{
-		return KILLING_MOVE;
-	}
-	
-	if (moves.charAt(0) >= 'a' && moves.charAt(0) <= 'h')
-	{
-		return  PREFERENCE_MOVE;
-	}
-	
-	if (moves.charAt(0) == 'o')
-	{
-		return CASTLING;
-	}
-	return -1;
-  }
   
-  public static void main(String[] arg)
-  {
-	ChessBoard chess = new ChessBoard();
-	chess.chessMove("P","c4",'W');
-	chess.chessMove("P","d6",'B');
-	chess.chessMove("P","e4",'W');
-	chess.chessMove("P","d5", 'B');
-	chess.chessMove("P", "cxd5", 'W');
-	
-	
-	System.out.println("Done!");
-  }
   
+  
+ 
+	public void chessMove(String pieceType, String move, char color)
+	{	
+		if (color == 'B')
+		{
+			blackPieceMove(pieceType, move);
+		}else
+		{
+			whitePieceMove(pieceType, move);
+		}
+	}  
+  
+	private int classifyMove(String moves)
+	{
+  
+		if (moves.length() == 2)
+		{
+			return MOVE;
+		}
+	
+		if (moves.charAt(0) == 'x' || moves.charAt(1) == 'x')
+		{
+			return KILLING_MOVE;
+		}
+	
+		if (moves.charAt(0) >= 'a' && moves.charAt(0) <= 'h')
+		{
+			return  PREFERENCE_MOVE;
+		}
+	
+		if (moves.charAt(0) == 'o')
+		{
+			return CASTLING;
+		}
+		return -1;
+	}
+  
+	public static void main(String[] arg)
+	{
+		ChessBoard chess = new ChessBoard();
+		chess.chessMove("P","c4",'W');
+		chess.chessMove("P","d6",'B');
+		chess.chessMove("P","e4",'W');
+		chess.chessMove("P","d5", 'B');
+		chess.chessMove("P", "cxd5", 'W');
+		System.out.println("Done!");
+	}
 }
