@@ -2,24 +2,66 @@ import java.util.*;
 
 public class Piece{
   
-  protected String position;
-  protected char typeOfPiece;
+  protected String position = "";
+  protected String typeOfPiece = "";
   protected boolean isKilled;
-  protected char colourOfPiece;
   
-  Piece(String position,char color, String type){
-	position = position;
+  
+  Piece(String position){
+	extractType(position);
+	this.position = position;
 	isKilled = false;
-	colourOfPiece = color;
-	typeOfPiece = type;
+	position = position.substring(position.length() - 2);
   }
 
-  protected void setPosition(String position){
+  protected boolean setPosition(String position){
+	  if (canMoveTo(position))
+	  {
+			this.position = position;
+			return true;
+	  }
+	  return false;
   }
   
-  protected boolean canMoveTo(String position){
+  protected boolean canMoveToPawn(String nposition){
   
-  }
+		if (this.typeOfPiece.equals("P"))
+		{
+			char alpha[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+			int row = Integer.parseInt("" + nposition.charAt(1));
+			char col = nposition.charAt(0);
+		
+			int currentRow = Integer.parseInt("" + this.position.charAt(1)); 
+			char currentCol = this.position.charAt(0); 
+		
+			if(currentRow + 1 == row && currentCol == col) return true;
+			if(current - 1 == row && currentCol == col) return true;
+		
+		
+			if(currentRow + 1 == row && currentCol + 1 == col) return true;
+			if(currentRow + 1 == row && currentCol - 1 == col) return true;
+		
+			return false;
+		}
+		if (this.typeOfPiece.equals("R"))
+		{
+			
+		
+		}
+		
+		if (this.typeOfPiece.equals("N"))
+		{
+		
+		
+		
+		
+		}
+		if (this.typeOfPiece.equals("B"))
+		{
+		
+	
+		}
+	}
 
   protected boolean isKilled()
   {
@@ -29,9 +71,19 @@ public class Piece{
   protected boolean kill(boolean isKilled)
   {
 	this.isKilled = isKilled;
+	return isKilled;
   }
   
-  protected boolean getType()
+  private void extractType(String position){
+	  if(Character.isUpperCase(position.charAt(0)) == false)
+		  typeOfPiece = "P";
+	  else{
+		  typeOfPiece += position.charAt(0);
+	  }
+  }
+  
+  
+  protected String getType()
   {
 	return typeOfPiece;
   }
