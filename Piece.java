@@ -23,7 +23,7 @@ public class Piece{
 	  return false;
   }
   
-  protected boolean canMoveToPawn(String nposition){
+  protected boolean canMoveTo(String nposition){
   
 		if (this.typeOfPiece.equals("P"))
 		{
@@ -38,8 +38,8 @@ public class Piece{
 			if(current - 1 == row && currentCol == col) return true;
 		
 		
-			if(currentRow + 1 == row && currentCol + 1 == col) return true;
-			if(currentRow + 1 == row && currentCol - 1 == col) return true;
+			if(currentRow + 1 == row && Arrays.indexOf(alpha,currentCol) + 1 == Arrays.indexOf(alpha,col)) return true;
+			if(currentRow + 1 == row && Arrays.indexOf(alpha,currentCol) - 1 == Arrays.indexOf(alpha,col)) return true;
 		
 			return false;
 		}
